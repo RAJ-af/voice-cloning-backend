@@ -10,16 +10,18 @@ import io
 
 load_dotenv()
 
-app = FastAPI(title="Voice Cloning API")
+app = FastAPI(title="Voice Cloning API", version="1.0")
 
-# CORS
+# CORS configuration for public access
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=["*"],  # For production, specify your Android app domain
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+PORT = int(os.getenv("PORT", 7860))  # HF Spaces default
 
 # Supabase
 supabase = create_client(
